@@ -7,9 +7,12 @@ exports[`cli --help 1`] = `
   Usage
     $ webpack-serve <config> [...options]
 
+  <config>
+    Custom serve config file instead of default search path.
+
   Options
     --clipboard      Specify whether or not the server should copy the server URI to the clipboard (default: true)
-    --config         The webpack config to serve. Alias for <config>
+    --config         The webpack config to serve.
     --content        The path from which static content will be served (default: process.cwd)
     --dev-ware       Set options for webpack-dev-middleware. e.g. --dev-ware.publicPath /
     --help           Show usage information and the options listed here.
@@ -45,7 +48,7 @@ exports[`cli --help 1`] = `
 `;
 
 exports[`cli bad config 1`] = `
-"Command failed: <PROJECT_ROOT>/lib/cli.js ./test/fixtures/invalid.config.js
+"Command failed: <PROJECT_ROOT>/lib/cli.js --config ./test/fixtures/invalid.config.js
 
 ValidationError: config-loader
 
@@ -55,7 +58,7 @@ ValidationError: config-loader
 `;
 
 exports[`cli config throwing error 1`] = `
-"Command failed: <PROJECT_ROOT>/lib/cli.js ./test/fixtures/error.config.js
+"Command failed: <PROJECT_ROOT>/lib/cli.js --config ./test/fixtures/error.config.js
 <PROJECT_ROOT>/test/fixtures/error.config.js:3
   throw new Error('batman');
   ^

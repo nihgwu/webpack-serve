@@ -6,7 +6,7 @@ module.exports = {
     type: 'boolean',
   },
   config: {
-    desc: 'The webpack config to serve. Alias for <config>',
+    desc: 'The webpack config to serve.',
     type: 'string',
   },
   content: {
@@ -14,7 +14,8 @@ module.exports = {
     type: 'string',
   },
   'dev-ware': {
-    desc: 'Set options for webpack-dev-middleware. e.g. --dev-ware.publicPath /',
+    desc:
+      'Set options for webpack-dev-middleware. e.g. --dev-ware.publicPath /',
     type: 'object',
   },
   help: {

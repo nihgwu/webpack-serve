@@ -48,18 +48,6 @@ describe('cli', () => {
     });
   });
 
-  test('[config]', () => {
-    const config = './test/fixtures/basic/webpack.config.js';
-    const proc = run([config, '--port', '9090']);
-
-    return proc.ready.then(() =>
-      request('http://localhost:9090')
-        .get('/output.js')
-        .expect(200)
-        .then(() => proc.kill('SIGINT'))
-    );
-  });
-
   test('--config', () => {
     const config = './test/fixtures/basic/webpack.config.js';
     const proc = run(['--config', config, '--port', '8888']);
@@ -74,7 +62,7 @@ describe('cli', () => {
 
   test('bad config', () => {
     const config = './test/fixtures/invalid.config.js';
-    const proc = run([config]);
+    const proc = run(['--config', config]);
 
     return proc.catch((e) => {
       const message = e.message
@@ -90,7 +78,7 @@ describe('cli', () => {
 
   test('config throwing error', () => {
     const config = './test/fixtures/error.config.js';
-    const proc = run([config]);
+    const proc = run(['--config', config]);
 
     return proc.catch((e) => {
       const message = e.message.split(/\n\s+at/);
@@ -102,10 +90,23 @@ describe('cli', () => {
   test('serve.config.js', () => {
     const config = './basic/webpack.config.js';
     const cwd = join(__dirname, 'fixtures');
-    const proc = run([config], { cwd });
+    const proc = run(['--config', config], { cwd });
 
     return proc.ready.then(() =>
       request('http://0.0.0.0:8080')
+        .get('/output.js')
+        .expect(200)
+        .then(() => proc.kill('SIGINT'))
+    );
+  });
+
+  test('[config]', () => {
+    const serveConfig = './test/fixtures/basic/custom-serve.config.js';
+    const config = './test/fixtures/basic/webpack.config.js';
+    const proc = run([serveConfig, '--config', config]);
+
+    return proc.ready.then(() =>
+      request('http://0.0.0.0:8888')
         .get('/output.js')
         .expect(200)
         .then(() => proc.kill('SIGINT'))
